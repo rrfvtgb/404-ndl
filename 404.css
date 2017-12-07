@@ -7,6 +7,23 @@ body{
 h1{
     margin: 0;
     font-size: 190px;
+    cursor: pointer;
+	transition: color 0.5s;
+	color: #fff;
+	position: relative;
+	animation-duration: 3s;
+	animation-name: titre;
+  	animation-iteration-count: infinite;
+}
+
+* {
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 a{
@@ -14,7 +31,7 @@ a{
     text-decoration: none;
 }
 
-.playground{
+#playground{
     position: absolute;
     top: 50%;
     bottom: 50%;
@@ -24,4 +41,34 @@ a{
     height: 303px;
     text-align:center;
     margin: -151px -202px ;
+	transition: left 1s, opacity 0.3s;
+	opacity: 1;
+}
+
+#box {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+}
+
+@keyframes titre {
+  from {
+  	left: 0px;
+  }
+
+  70% {
+  	left: 5px;
+  }
+  75% {
+  	left: -5px;
+  }
+  80% {
+  	left: 5px;
+  }
+
+  to {
+  	left: 0px;
+  }
 }
