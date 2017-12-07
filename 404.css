@@ -1,0 +1,27 @@
+body{
+    background: black;
+    color: white;
+    margin: 0;
+}
+
+h1{
+    margin: 0;
+    font-size: 190px;
+}
+
+a{
+    color: #29b6f6;
+    text-decoration: none;
+}
+
+.playground{
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    width: 404px;
+    height: 303px;
+    text-align:center;
+    margin: -151px -202px ;
+}
