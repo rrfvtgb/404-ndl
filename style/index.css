@@ -1,0 +1,54 @@
+/**
+ * Alignement du block et du texte
+ */
+body{
+	text-align: center;
+}
+
+/**
+ * Block index
+ * (Block racine)
+ */
+.index{
+	margin: 50px;
+	display: inline-block;
+	width: 400px;
+	box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.5);
+}
+
+/**
+ * Zone bleu foncé avant le titre
+ */
+.placeholder{
+	background: #001970;
+	height: 20px;
+}
+
+/**
+ * Titre avec fond bleu
+ */
+h1{
+	background: #303f9f;
+	color: #ffffff;
+	padding: 10px 30px;
+	border-top: 1px solid #666ad1;
+	border-bottom: 1px solid #666ad1;
+	margin-top: 0;
+}
+
+/**
+ * Espacement des blocs
+ */
+p, h2, a {
+	padding: 10px 25px;
+	display:block;
+}
+
+/**
+ * Pas de liens soulignés
+ * Couleur bleu clair
+ */
+a{
+	text-decoration: none;
+    color: #29b6f6;
+}

@@ -11,6 +11,9 @@ var overlay
 var state;
 var proba;
 
+/**
+ * Initiation valeur par défaut
+ */
 function initVars(){
 	cars = [];
 	score = 0;
@@ -31,6 +34,22 @@ function removeElement(e){
 	e.parentElement.removeChild(e);
 }
 
+/**
+ * Fonction aléatoire
+ */
+function randomInt(min, max){
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function randomItem(list){
+	return list[randomInt(0, list.length)];
+}
+
+/**
+ * Click titre 404
+ */
 function click(e){
 	progress += 0.9;
 	
@@ -49,6 +68,9 @@ function click(e){
 	return false;
 }
 
+/**
+ * Lance le minijeu
+ */
 function start(){
 	console.log("Started");
 	playground.style.left = "-400px";
@@ -57,6 +79,9 @@ function start(){
 	setTimeout(createPlayground, 500);
 }
 
+/**
+ * Crée la zone du minijeu
+ */
 function createPlayground(){
 	state.visible = true;
 	state.animation = true;
@@ -68,7 +93,7 @@ function createPlayground(){
 	removeElement(playground);
 	
 	hint = document.createElement("div");
-	hint.innerHTML = "Esquivez les voitures à l'aide de votre souris tout en restant dans la zone blanche";
+	hint.innerHTML = "Esquivez les voitures à l'aide de votre souris tout en restant dans la zone grise";
 	hint.className = "hint";
 	
 	overlay = document.createElement("div");
@@ -102,12 +127,15 @@ function createPlayground(){
 		playground.className = "full";
 	
 		playground.appendChild(hint);
-		playground.appendChild(overlay);
+		document.body.appendChild(overlay);
 	}, 200);
 	
 	setTimeout(playgroundAnimationDone, 2500);
 }
 
+/**
+ * Animation du minijeu terminé 
+ */
 function playgroundAnimationDone(){
 	state.animation = false;
 	
@@ -116,6 +144,9 @@ function playgroundAnimationDone(){
 	}
 }
 
+/**
+ * Lance le compteur du début du jeu
+ */
 function startCountdown(){
 	if(!state.started && !state.countdown){
 		hint.className += " fade";
@@ -145,6 +176,9 @@ function startCountdown(){
 	}
 }
 
+/**
+ * Affiche un message en grand à l'écran
+ */
 function countdown(message, color){
 	var txt = document.createElement("p");
 	
@@ -159,6 +193,9 @@ function countdown(message, color){
 	}, 700);
 }
 
+/**
+ * Est dans la zone
+ */
 function startGame(){
 	state.started = true;
 	
@@ -169,16 +206,9 @@ function startGame(){
 	}
 }
 
-function randomInt(min, max){
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function randomItem(list){
-	return list[randomInt(0, list.length)];
-}
-
+/**
+ * Fait apparaitre une voiture
+ */
 function spawn(){
 	proba *= 0.995;
 	
@@ -278,6 +308,9 @@ function spawn(){
 	}
 }
 
+/**
+ * Fait bouger les voitures
+ */
 function run(){
 	for(var i=0; i<cars.length; i++){
 		var veh = cars[i];
@@ -327,11 +360,17 @@ function run(){
 	}
 }
 
+/**
+ * Boucle qui gère la création et les mouvements des voitures
+ */
 function go(){
 	run();
 	spawn();
 }
 
+/**
+ * Affiche l'écran de fin via une animation
+ */
 function lose(){
 	if(!state.lost && state.started){
 		removeElement(overlay);
@@ -361,6 +400,9 @@ function lose(){
 	}
 }
 
+/**
+ * Affiche écran du score de la partie
+ */
 function displayScore(){
 	if(score != 0){
 		playground = document.createElement("div");
@@ -387,6 +429,9 @@ function displayScore(){
 	}
 }
 
+/**
+ * Envoie les scores au serveur pour enregistrements
+ */
 function sendScore(name){
 	var xhr = new XMLHttpRequest();
 	
@@ -403,6 +448,9 @@ function sendScore(name){
 	xhr.send(null);
 }
 
+/**
+ * Affiche les scores reçus à partir du serveur
+ */
 function showScore(score){
 	console.log("Score:");
 	console.log(score);
@@ -427,6 +475,9 @@ function showScore(score){
 	document.body.appendChild(playground);
 }
 
+/**
+ * Réaffiche le menu
+ */
 function menu(){
 	initVars();
 	
@@ -439,6 +490,9 @@ function menu(){
 	h1.onclick = click;
 }
 
+/**
+ * Detecte le chargement de la page
+ */
 window.onload = function(){
 	initVars();
 	

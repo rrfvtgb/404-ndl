@@ -1,5 +1,3 @@
-create database ndl;
-
 create table scoreboard (
 	id INTEGER AUTO_INCREMENT,
 	nom VARCHAR(20),
