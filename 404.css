@@ -83,6 +83,7 @@ a{
 	border-radius: 15px;
 
 	margin: -150px -300px;
+	cursor:url(cursor.cur), auto;
 }
 
 #box::after {
@@ -144,6 +145,18 @@ a{
     height: 303px;
     text-align:center;
     margin: -151px -202px;
+}
+
+.score p {
+	margin: 0;
+}
+
+.score button{
+    color: #fff;
+    background: #283593;
+    border: none;
+    border-radius: 0;
+    margin-top: 10px;
 }
 
 .score h2 {

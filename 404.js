@@ -399,13 +399,32 @@ function sendScore(name){
 			}
 		}
 	};
-	xhr.open("GET", "scoreboard.php?name="+encodeURIComponent(name)+"&score="+encodeURIComponent(score), true);
+	xhr.open("GET", "scoreboard.php?nom="+encodeURIComponent(name)+"&score="+encodeURIComponent(score), true);
 	xhr.send(null);
 }
 
 function showScore(score){
 	console.log("Score:");
 	console.log(score);
+	
+	removeElement(playground);
+	
+	playground = document.createElement("div");
+	playground.className = "score";
+	
+	for(var i=0; i<score.length; i++){
+		var p = document.createElement("p");
+		p.innerHTML = score[i][1] +" - "+ score[i][2];
+		playground.appendChild(p);
+	}
+	
+	var button = document.createElement("button");
+	button.innerHTML = "Retour";
+	button.onclick = menu;
+	
+	playground.appendChild(button);
+	
+	document.body.appendChild(playground);
 }
 
 function menu(){
