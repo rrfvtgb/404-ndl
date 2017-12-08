@@ -52,7 +52,7 @@ a{
 
 #box {
     position: absolute;
-    top: 50%;
+    top: 0%;
     bottom: 50%;
     left: 50%;
     right: 50%;
@@ -62,18 +62,25 @@ a{
 
     margin: -50px;
 
-    transition: background 0.5s, width 0.5s, height 0.5s, margin 0.5s;
+    transition: background 0.5s, width 0.5s, height 0.5s, margin 0.5s, border-color 0.5s, border-radius 0.5s, top 0.5s;
 	background: #000;
+	border: 1px solid #111;
+	z-index: 500;
 }
 
 #box.small {
-	background: #fff;
+	background: #222;
+	border-color: #888;
+    top: 50%;
 }
 
 #box.full {
+    top: 50%;
 	height: 300px;
 	width: 600px; 
-	background: #fff;
+	background: #222;
+	border-color: #ccc;
+	border-radius: 15px;
 
 	margin: -150px -300px;
 }
@@ -97,21 +104,34 @@ a{
 	opacity: 0.1;
 }
 
+#overlay{
+	position:absolute;
+	top: 50%;
+	bottom: 50%;
+	left: 50%;
+	right: 50%;
+	background: url("overlay3.png") no-repeat;
+	animation-duration: 1s;
+	animation-name: fadein;
+	width: 900px;
+	height: 600px;
+	margin: -300px -450px;
+}
+
 .countdown{
 	position: absolute;
-
 	top: 50%;
 	left: 50%;
-	width: 500px;
-	height: 500px;
-	margin: -250px;
+	width: 200px;
+	height: 0px;
+	margin: -100px -100px;
 	font-size: 200px;
 	animation-duration: 1s;
 	animation-name: countdown;
 	color:#00838f;
 	text-align: center;
-	box-shadow: 0px 0x 30px 30px #000;
-	z-index: 500;
+	z-index: 700;
+	pointer-events:none;
 }
 
 .score {
@@ -152,6 +172,8 @@ a{
     background: url("racer2.png");
     transition: left 0.2s, right 0.2s, top 0.2s, bottom 0.2s;
     transition-timing-function: linear;
+
+    z-index: 600;
 }
 
 .car-2 {
@@ -176,6 +198,20 @@ a{
 
 .car-top {
 	transform: rotate(180deg);
+}
+
+.hint{
+	position: absolute;
+	top:50px;
+	left: -200px;
+	width: 200px;
+	animation-duration: 1s;
+	animation-name: fadein;
+}
+
+.fade{
+	animation-duration: 1s;
+	animation-name: fadeout;
 }
 
 
@@ -214,4 +250,32 @@ a{
   to {
   	left: 0px;
   }
+}
+
+@keyframes fadein{
+	from{
+		opacity: 0;
+	}
+
+	50%{
+		opacity: 0;
+	}
+
+	to{
+		opacity: 1;
+	}
+}
+
+@keyframes fadeout{
+	from{
+		opacity: 1;
+	}
+
+	50%{
+		opacity: 1;
+	}
+
+	to{
+		opacity: 0;
+	}
 }

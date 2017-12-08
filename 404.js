@@ -5,6 +5,8 @@ var timer;
 var score;
 var menuElement;
 var cars;
+var hint;
+var overlay
 
 var state;
 var proba;
@@ -30,7 +32,7 @@ function removeElement(e){
 }
 
 function click(e){
-	progress += 0.6;
+	progress += 0.9;
 	
 	var tmp_color = (16-Math.ceil(progress*16)).toString(16);
 	
@@ -65,7 +67,12 @@ function createPlayground(){
 	
 	removeElement(playground);
 	
+	hint = document.createElement("div");
+	hint.innerHTML = "Esquivez les voitures à l'aide de votre souris tout en restant dans la zone blanche";
+	hint.className = "hint";
 	
+	overlay = document.createElement("div");
+	overlay.id= "overlay";
 	
 	playground = document.createElement("div");
 	playground.id = "box";
@@ -93,9 +100,12 @@ function createPlayground(){
 	
 	setTimeout(function(){
 		playground.className = "full";
+	
+		playground.appendChild(hint);
+		playground.appendChild(overlay);
 	}, 200);
 	
-	setTimeout(playgroundAnimationDone, 1000);
+	setTimeout(playgroundAnimationDone, 2500);
 }
 
 function playgroundAnimationDone(){
@@ -108,6 +118,12 @@ function playgroundAnimationDone(){
 
 function startCountdown(){
 	if(!state.started && !state.countdown){
+		hint.className += " fade";
+		
+		setTimeout((function(){
+			removeElement(hint);
+		}), 1000);
+		
 		state.countdown = true;
 		console.log("start Countdown");
 		
@@ -136,11 +152,11 @@ function countdown(message, color){
 	txt.innerHTML = message;
 	txt.style.color = color;
 	
-	playground.appendChild(txt);
+	document.body.appendChild(txt);
 	
 	setTimeout(function(){
 		removeElement(txt);
-	}, 1000);
+	}, 700);
 }
 
 function startGame(){
@@ -201,7 +217,7 @@ function spawn(){
 		var left =  -size;
 		veh.style.left = left+"px";
 		veh.style.top = "50%";
-		veh.style.marginTop = (randomInt(-3, 3)*50)+"px";
+		veh.style.marginTop = (randomInt(0, 3)*50 -25)+"px";
 		
 		cars.push({
 			element: veh,
@@ -217,7 +233,7 @@ function spawn(){
 		var right =  -size;
 		veh.style.right = right+"px";
 		veh.style.top = "50%";
-		veh.style.marginTop = (randomInt(-3, 3)*50)+"px";
+		veh.style.marginTop = (randomInt(-3, 0)*50 -25)+"px";
 		
 		cars.push({
 			element: veh,
@@ -233,7 +249,7 @@ function spawn(){
 		var top =  -size;
 		veh.style.top = top+"px";
 		veh.style.left = "50%";
-		veh.style.marginLeft = (randomInt(-6, 6)*50)+"px";
+		veh.style.marginLeft = (randomInt(-6, 0)*50)+"px";
 		
 		cars.push({
 			element: veh,
@@ -249,7 +265,7 @@ function spawn(){
 		var bottom =  -size;
 		veh.style.bottom = bottom+"px";
 		veh.style.left = "50%";
-		veh.style.marginLeft = (randomInt(-6, 6)*50)+"px";
+		veh.style.marginLeft = (randomInt(0, 6)*50)+"px";
 		
 		cars.push({
 			element: veh,
@@ -318,6 +334,7 @@ function go(){
 
 function lose(){
 	if(!state.lost && state.started){
+		removeElement(overlay);
 		for(var i=0; i<cars.length; i++){
 			removeElement(cars[i].element);
 		}
@@ -353,6 +370,11 @@ function displayScore(){
 		
 		h2.innerHTML="Score "+score;
 		input.placeholder="Pseudo";
+		input.onkeydown = (function(e){
+			if(e.key == "Enter" && input.value.length > 2){
+				sendScore(input.value);
+			}
+		});
 		
 		playground.className = "score";
 		
@@ -363,6 +385,27 @@ function displayScore(){
 	}else{
 		menu();
 	}
+}
+
+function sendScore(name){
+	var xhr = new XMLHttpRequest();
+	
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4){
+			if (xhr.status == 200 || xhr.status == 0) {
+				showScore(JSON.parse(xhr.responseText));
+			}else{
+				menu();
+			}
+		}
+	};
+	xhr.open("GET", "scoreboard.php?name="+encodeURIComponent(name)+"&score="+encodeURIComponent(score), true);
+	xhr.send(null);
+}
+
+function showScore(score){
+	console.log("Score:");
+	console.log(score);
 }
 
 function menu(){
