@@ -4,12 +4,16 @@ var playground;
 var timer;
 var score;
 var menuElement;
+var cars;
 
 var state;
+var proba;
 
 function initVars(){
+	cars = [];
 	score = 0;
 	progress = 0;
+	proba = 1;
 	
 	state = {
 		visible: false,
@@ -26,7 +30,7 @@ function removeElement(e){
 }
 
 function click(e){
-	progress += 0.4;
+	progress += 0.6;
 	
 	var tmp_color = (16-Math.ceil(progress*16)).toString(16);
 	
@@ -145,16 +149,178 @@ function startGame(){
 	if(!state.inArea){
 		lose();
 	}else{
-		timer = setInterval(spawn, 200);
+		timer = setInterval(go, 100);
 	}
 }
 
+function randomInt(min, max){
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function randomItem(list){
+	return list[randomInt(0, list.length)];
+}
+
 function spawn(){
+	proba *= 0.995;
 	
+	if(Math.random()< proba && cars.length > 5){
+		return;
+	}
+	
+	var orient = randomInt(1, 5);
+	var veh;
+	var voiture = randomItem([{
+		id: 1,
+		speed: 30,
+		pts: 50
+	},{
+		id: 2,
+		speed: 40,
+		pts: 100
+	},{
+		id: 3,
+		speed: 50,
+		pts: 150
+	},{
+		id: 4,
+		speed: 60,
+		pts: 200
+	}]);
+	var speed = voiture.speed;
+	var id = "car-"+voiture.id;
+	var size = 200;
+	var pts = voiture.pts;
+	
+	if(orient ==1){
+		veh = document.createElement("span");
+		veh.className = "car car-left "+id;
+		var left =  -size;
+		veh.style.left = left+"px";
+		veh.style.top = "50%";
+		veh.style.marginTop = randomInt(-150, 100)+"px";
+		
+		cars.push({
+			element: veh,
+			left: left,
+			inc: speed,
+			pts: pts
+		})
+		
+		document.body.appendChild(veh);
+	}else if(orient == 2){
+		veh = document.createElement("span");
+		veh.className = "car car-right "+id;
+		var right =  -size;
+		veh.style.right = right+"px";
+		veh.style.top = "50%";
+		veh.style.marginTop = randomInt(-150, 100)+"px";
+		
+		cars.push({
+			element: veh,
+			right: right,
+			inc: speed,
+			pts: pts
+		})
+		
+		document.body.appendChild(veh);
+	}else if(orient == 3){
+		veh = document.createElement("span");
+		veh.className = "car car-top "+id;
+		var top =  -size;
+		veh.style.top = top+"px";
+		veh.style.left = "50%";
+		veh.style.marginLeft = randomInt(-300, 250)+"px";
+		
+		cars.push({
+			element: veh,
+			top: top,
+			inc: speed,
+			pts: pts
+		})
+		
+		document.body.appendChild(veh);
+	}else if(orient == 4){
+		veh = document.createElement("span");
+		veh.className = "car car-bottom "+id;
+		var bottom =  -size;
+		veh.style.bottom = bottom+"px";
+		veh.style.left = "50%";
+		veh.style.marginLeft = randomInt(-300, 250)+"px";
+		
+		cars.push({
+			element: veh,
+			bottom: bottom,
+			inc: speed,
+			pts: pts
+		})
+		
+		document.body.appendChild(veh);
+	}
+}
+
+function run(){
+	for(var i=0; i<cars.length; i++){
+		var veh = cars[i];
+		
+		if(veh.left !== undefined){
+			veh.left += veh.inc;
+			veh.element.style.left = veh.left+"px";
+			
+			
+			if(veh.left > window.innerWidth+200){
+				removeElement(veh.element);
+				cars.splice(i, 1);
+				i--;
+				score += veh.pts;
+			}
+		}else if(veh.right !== undefined){
+			veh.right += veh.inc;
+			veh.element.style.right = veh.right+"px";
+			
+			if(veh.right > window.innerWidth+200){
+				removeElement(veh.element);
+				cars.splice(i, 1);
+				i--;
+				score += veh.pts;
+			}
+		}else if(veh.top !== undefined){
+			veh.top += veh.inc;
+			veh.element.style.top = veh.top+"px";
+			
+			if(veh.top > window.innerHeight+200){
+				removeElement(veh.element);
+				cars.splice(i, 1);
+				i--;
+				score += veh.pts;
+			}
+		}else if(veh.bottom !== undefined){
+			veh.bottom += veh.inc;
+			veh.element.style.bottom = veh.bottom+"px";
+			
+			if(veh.bottom > window.innerHeight+200){
+				removeElement(veh.element);
+				cars.splice(i, 1);
+				i--;
+				score += veh.pts;
+			}
+		}
+	}
+}
+
+function go(){
+	run();
+	spawn();
 }
 
 function lose(){
 	if(!state.lost && state.started){
+		for(var i=0; i<cars.length; i++){
+			removeElement(cars[i].element);
+		}
+		
 		clearInterval(timer);
 		
 		console.log("Lose");

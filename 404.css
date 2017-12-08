@@ -143,6 +143,42 @@ a{
 	outline: none;
 }
 
+
+.car {
+	position: absolute;
+    width: 56px;
+    height: 116px;
+    text-align:center;
+    background: url("racer2.png");
+    transition: left 0.2s, right 0.2s, top 0.2s, bottom 0.2s;
+    transition-timing-function: linear;
+}
+
+.car-2 {
+	background: url("racer.png");
+}
+
+.car-3 {
+	background: url("racer3.png");
+}
+
+.car-4 {
+	background: url("racer4.png");
+}
+
+.car-left {
+	transform: rotate(90deg);
+}
+
+.car-right {
+	transform: rotate(270deg);
+}
+
+.car-top {
+	transform: rotate(180deg);
+}
+
+
 @keyframes countdown {
 	from{
 		top: -500px;
