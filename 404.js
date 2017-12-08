@@ -189,6 +189,7 @@ function spawn(){
 		speed: 60,
 		pts: 200
 	}]);
+	
 	var speed = voiture.speed;
 	var id = "car-"+voiture.id;
 	var size = 200;
@@ -200,7 +201,7 @@ function spawn(){
 		var left =  -size;
 		veh.style.left = left+"px";
 		veh.style.top = "50%";
-		veh.style.marginTop = randomInt(-150, 100)+"px";
+		veh.style.marginTop = (randomInt(-3, 3)*50)+"px";
 		
 		cars.push({
 			element: veh,
@@ -216,7 +217,7 @@ function spawn(){
 		var right =  -size;
 		veh.style.right = right+"px";
 		veh.style.top = "50%";
-		veh.style.marginTop = randomInt(-150, 100)+"px";
+		veh.style.marginTop = (randomInt(-3, 3)*50)+"px";
 		
 		cars.push({
 			element: veh,
@@ -232,7 +233,7 @@ function spawn(){
 		var top =  -size;
 		veh.style.top = top+"px";
 		veh.style.left = "50%";
-		veh.style.marginLeft = randomInt(-300, 250)+"px";
+		veh.style.marginLeft = (randomInt(-6, 6)*50)+"px";
 		
 		cars.push({
 			element: veh,
@@ -248,7 +249,7 @@ function spawn(){
 		var bottom =  -size;
 		veh.style.bottom = bottom+"px";
 		veh.style.left = "50%";
-		veh.style.marginLeft = randomInt(-300, 250)+"px";
+		veh.style.marginLeft = (randomInt(-6, 6)*50)+"px";
 		
 		cars.push({
 			element: veh,
