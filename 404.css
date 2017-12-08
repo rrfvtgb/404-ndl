@@ -2,6 +2,7 @@ body{
     background: black;
     color: white;
     margin: 0;
+    overflow: hidden;
 }
 
 h1{
@@ -24,6 +25,10 @@ h1{
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.disable-cursor * {
+	cursor: none;
 }
 
 a{
@@ -73,19 +78,137 @@ a{
 	margin: -150px -300px;
 }
 
+#box::after {
+	content: "";
+	background: url("zone.png") no-repeat;
+	width: 300px;
+	height: 70px;
+	position: absolute;
+	bottom: -70px;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+#box.full::after{
+	opacity: 1;
+}
+
+#box:hover::after{
+	opacity: 0.1;
+}
+
+.countdown{
+	position: absolute;
+
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 500px;
+	margin: -250px;
+	font-size: 200px;
+	animation-duration: 1s;
+	animation-name: countdown;
+	color:#00838f;
+	text-align: center;
+	box-shadow: 0px 0x 30px 30px #000;
+	z-index: 500;
+}
+
+.score {
+	position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    width: 404px;
+    height: 303px;
+    text-align:center;
+    margin: -151px -202px;
+}
+
+.score h2 {
+	font-size: 50px;
+}
+
+.score input {
+	color: #fff;
+	background: none;
+	border: none;
+	border-bottom: 1px solid #666;
+	padding: 10px;
+}
+
+.score input:focus{
+	border-bottom: 1px solid #1976d2;
+	outline: none;
+}
+
+
+.car {
+	position: absolute;
+    width: 56px;
+    height: 116px;
+    text-align:center;
+    background: url("racer2.png");
+    transition: left 0.2s, right 0.2s, top 0.2s, bottom 0.2s;
+    transition-timing-function: linear;
+}
+
+.car-2 {
+	background: url("racer.png");
+}
+
+.car-3 {
+	background: url("racer3.png");
+}
+
+.car-4 {
+	background: url("racer4.png");
+}
+
+.car-left {
+	transform: rotate(90deg);
+}
+
+.car-right {
+	transform: rotate(270deg);
+}
+
+.car-top {
+	transform: rotate(180deg);
+}
+
+
+@keyframes countdown {
+	from{
+		top: -500px;
+		opacity: 0;
+	}
+
+	50%{
+		top:250px;
+		opacity: 0.9;
+	}
+
+	to{
+		top: 500px;
+		opacity: 0;
+	}
+}
+
 @keyframes titre {
   from {
   	left: 0px;
   }
 
   70% {
-  	left: 5px;
+  	left: 15px;
   }
   75% {
-  	left: -5px;
+  	left: -15px;
   }
   80% {
-  	left: 5px;
+  	left: 15px;
   }
 
   to {
